@@ -19,6 +19,7 @@ public class LogSimulation {
 		// 회원가입/로그인
 		// 로그인 전 화면 로직
 		while (true) {
+			System.out.println("=========== 회원가입/로그인 =========");
 			System.out.println("[1] 회원가입 [2] 로그인");
 			System.out.print("번호를 입력하세요 : ");
 			int initChoice = sc.nextInt();
@@ -30,20 +31,23 @@ public class LogSimulation {
 				else
 					continue;
 			} else
-				System.out.println("번호를 다시 입력해주세요.");
+				System.out.println("번호를 다시 입력해주세요." + "\n");
 		}
 
 		// 서비스(입/출금)
 		// 로그인 후 화면 로직
 		while (true) {
-			System.out.println("[1] 입금 [2] 출금");
+			System.out.println("=========== 서비스 선택 =========");
+			System.out.println("[1] 입금 [2] 출금 [3] 종료");
 			System.out.print("번호를 입력하세요 : ");
 			int serviceChoice = sc.nextInt();
+			if (serviceChoice == 3)
+				return;
+
 			if (!(serviceChoice == 1 || serviceChoice == 2)) {
-				System.out.println("번호를 다시 입력해주세요.");
+				System.out.println("번호를 다시 입력해주세요." + "\n");
 				continue;
 			}
-
 			System.out.print("금액을 입력하세요 : ");
 			long amount = sc.nextInt();
 
@@ -57,7 +61,7 @@ public class LogSimulation {
 
 	// 회원가입
 	public void signUp() {
-		System.out.println("[회원가입 - 정보 입력]");
+		System.out.println("\n=========== [회원가입 - 정보 입력] ===========");
 		System.out.print("이름 : ");
 		String name = sc.next();
 		System.out.print("주민번호(xxxxxx-xxxxxxx) : ");
@@ -70,20 +74,22 @@ public class LogSimulation {
 
 		logger.info("{}", member.toString());
 		System.out.println(">> 회원가입 성공!");
-		System.out.println(">> 계좌번호가 생성되었습니다.");
+		System.out.println(">> 계좌번호가 생성되었습니다." + "\n");
 	}
 
 	// 로그인
 	public boolean signIn() {
-		System.out.println("[로그인]");
+		System.out.println("\n============= [로그인] =============");
 		System.out.print("이름 : ");
 		String inputName = sc.next();
 		System.out.print("비밀번호 : ");
 		String inputPW = sc.next();
 
+		boolean isFound = false;
 		for (Member m : memberList) {
 			// 1. 이름 확인
 			if (m.getName().equals(inputName)) {
+				isFound = true;
 				// 2. 비밀번호 확인
 				if (m.getPw().equals(inputPW)) {
 					// 비밀번호도 맞음 -> 로그인 성공!
@@ -91,38 +97,36 @@ public class LogSimulation {
 
 					// 로그인 성공 로그
 					logger.info("{}님 로그인 성공", currentMember.toString());
-					System.out.println(">> 로그인 성공! 환영합니다. " + currentMember.getName() + "님");
+					System.out.println(">> 로그인 성공! 환영합니다. " + currentMember.getName() + "님" + "\n");
 
 					return true;
 				} else {
 					// 이름은 맞는데 비밀번호가 틀림
 					logger.warn("로그인 실패: 비밀번호 불일치 (시도한 ID: {})", inputName);
-					System.out.println(">> 비밀번호가 일치하지 않습니다.");
+					System.out.println(">> 비밀번호가 일치하지 않습니다." + "\n");
 				}
 				break;
 			}
+			isFound = false;
 		}
-		System.out.println(">> 일치하는 이름이 없습니다.");
+		if (!isFound)
+			System.out.println(">> 일치하는 이름이 없습니다." + "\n");
 		return false;
 	}
 
 	// 입금
 	public void deposit(long amount) {
-		logger.info("[입금 성공] name={}, accountNumber={}, amount={}원", 
-				currentMember.getName(), 
-				currentMember.getAccountNumber(), 
+		logger.info("[입금 성공] 이름: {}, 계좌번호: {}, 금액: {}원", currentMember.getName(), currentMember.getAccountNumber(),
 				amount);
 
-		System.out.println(">> 입금 처리가 완료되었습니다.");
+		System.out.println(">> 입금 처리가 완료되었습니다." + "\n");
 	}
 
 	// 출금
 	public void withdraw(long amount) {
-		logger.info("[출금 성공] name={}, accountNumber={}, amount={}원", 
-				currentMember.getName(), 
-				currentMember.getAccountNumber(), 
+		logger.info("[출금 성공] 이름: {}, 계좌번호: {}, 금액: {}원", currentMember.getName(), currentMember.getAccountNumber(),
 				amount);
 
-		System.out.println(">> 출금 처리가 완료되었습니다.");
+		System.out.println(">> 출금 처리가 완료되었습니다." + "\n");
 	}
 }
