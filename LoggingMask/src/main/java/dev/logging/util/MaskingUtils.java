@@ -28,8 +28,10 @@ public class MaskingUtils {
     public static String maskAccount(String account) {
         if (account == null) return account;
         return account.replaceAll(
-            "(\\d+)-(\\d+)-(\\d{2})(\\d{4})",
-            "****-***-**$4"
+//            "(\\d+)-(\\d+)-(\\d{2})(\\d{4})",
+//            "****-***-**$4"
+        	"\\d{3}-\\d{7}-(\\d{1}-\\d{3})", 
+            "***-*******-$1"
         );
     }
 }

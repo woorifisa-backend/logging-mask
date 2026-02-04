@@ -108,7 +108,7 @@ public class LogSimulation {
 
 	// 입금
 	public void deposit(long amount) {
-		logger.info("[입금 성공] 이름: {}, 계좌번호: {}, 금액: {}원", 
+		logger.info("[입금 성공] name={}, accountNumber={}, amount={}원", 
 				currentMember.getName(), 
 				currentMember.getAccountNumber(), 
 				amount);
@@ -118,7 +118,7 @@ public class LogSimulation {
 
 	// 출금
 	public void withdraw(long amount) {
-		logger.info("[출금 성공] 이름: {}, 계좌번호: {}, 금액: {}원", 
+		logger.info("[출금 성공] name={}, accountNumber={}, amount={}원", 
 				currentMember.getName(), 
 				currentMember.getAccountNumber(), 
 				amount);

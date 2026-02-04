@@ -10,7 +10,7 @@ public class SensitiveDataConverter extends ClassicConverter {
 		String message = event.getFormattedMessage();
 		if (message == null) return "";
 
-	// 비밀번호 삭제
+		// 비밀번호 삭제
 		String result = message.replaceAll(",? ?pw=[^,]*", "");
 		
 		result = MaskingUtils.maskName(result);
