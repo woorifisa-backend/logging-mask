@@ -22,7 +22,7 @@ public class LogSimulation {
 			System.out.println("=========== 회원가입/로그인 =========");
 			System.out.println("[1] 회원가입 [2] 로그인");
 			System.out.print("번호를 입력하세요 : ");
-			int initChoice = sc.nextInt();
+			int initChoice = getValidIntInput();
 			if (initChoice == 1)
 				signUp();
 			else if (initChoice == 2) {
@@ -40,8 +40,14 @@ public class LogSimulation {
 			System.out.println("=========== 서비스 선택 =========");
 			System.out.println("[1] 입금 [2] 출금 [3] 종료");
 			System.out.print("번호를 입력하세요 : ");
+<<<<<<< Updated upstream
 			int serviceChoice = sc.nextInt();
 			if (serviceChoice == 3)
+=======
+			int serviceChoice = getValidIntInput();
+			if (serviceChoice == 3) {
+				System.out.println("시스템을 종료합니다.");
+>>>>>>> Stashed changes
 				return;
 
 			if (!(serviceChoice == 1 || serviceChoice == 2)) {
@@ -49,7 +55,7 @@ public class LogSimulation {
 				continue;
 			}
 			System.out.print("금액을 입력하세요 : ");
-			long amount = sc.nextInt();
+			long amount = getValidLongInput();
 
 			if (serviceChoice == 1)
 				deposit(amount);
@@ -59,22 +65,72 @@ public class LogSimulation {
 		}
 	}
 
+	private int getValidIntInput() {
+		while (true) {
+			try {
+				return sc.nextInt(); // 정상적으로 입력하면 바로 숫자 반환
+			} catch (InputMismatchException e) {
+				// 문자가 입력되면 에러가 발생
+				sc.nextLine();
+				System.out.println(">> 숫자만 입력해주세요.");
+				System.out.print("다시 입력하세요 : ");
+			}
+		}
+	}
+
+	private long getValidLongInput() {
+		while (true) {
+			try {
+				return sc.nextLong();
+			} catch (InputMismatchException e) {
+				sc.nextLine(); 
+				System.out.println(">> 올바른 금액(숫자)을 입력해주세요.");
+				System.out.print("금액을 다시 입력하세요 : ");
+			}
+		}
+	}
+
 	// 회원가입
 	public void signUp() {
 		System.out.println("\n=========== [회원가입 - 정보 입력] ===========");
 		System.out.print("이름 : ");
 		String name = sc.next();
-		System.out.print("주민번호(xxxxxx-xxxxxxx) : ");
-		String rrn = sc.next();
-		System.out.print("비밀번호 : ");
-		String pw = sc.next();
 
-		Member member = new Member(name, rrn, pw);
-		memberList.add(member);
+		String rrn = "";
+		while (true) {
+			System.out.print("주민번호(xxxxxx-xxxxxxx) : ");
+			rrn = sc.next();
 
-		logger.info("{}", member.toString());
-		System.out.println(">> 회원가입 성공!");
-		System.out.println(">> 계좌번호가 생성되었습니다." + "\n");
+			if (Member.isValidRrn(rrn)) {
+				break;
+			} else {
+				System.out.println(">> 주민번호 형식이 올바르지 않습니다.");
+			}
+		}
+
+		String pw = "";
+		while (true) {
+			System.out.print("비밀번호(영문/숫자 4자리 이상) : ");
+			pw = sc.next();
+
+			if (Member.isValidPw(pw)) {
+				break;
+			} else {
+				System.out.println(">> 비밀번호는 영문/숫자 포함 4글자 이상이어야 합니다.");
+			}
+		}
+
+		try {
+			Member member = new Member(name, rrn, pw);
+			memberList.add(member);
+
+			logger.info("신규 회원가입: {}", member.toString());
+			System.out.println(">> 회원가입 성공!");
+			System.out.println(">> 계좌번호가 생성되었습니다." + "\n");
+
+		} catch (IllegalArgumentException e) {
+			System.out.println(">> 회원가입 실패: " + e.getMessage());
+		}
 	}
 
 	// 로그인
@@ -102,7 +158,7 @@ public class LogSimulation {
 					return true;
 				} else {
 					// 이름은 맞는데 비밀번호가 틀림
-					logger.warn("로그인 실패: 비밀번호 불일치 (시도한 ID: {})", inputName);
+					logger.warn("로그인 실패: 비밀번호 불일치 // name={}", inputName);
 					System.out.println(">> 비밀번호가 일치하지 않습니다." + "\n");
 				}
 				break;
