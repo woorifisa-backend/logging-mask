@@ -40,15 +40,13 @@ public class LogSimulation {
 			System.out.println("=========== 서비스 선택 =========");
 			System.out.println("[1] 입금 [2] 출금 [3] 종료");
 			System.out.print("번호를 입력하세요 : ");
-<<<<<<< Updated upstream
-			int serviceChoice = sc.nextInt();
-			if (serviceChoice == 3)
-=======
+
 			int serviceChoice = getValidIntInput();
+
 			if (serviceChoice == 3) {
 				System.out.println("시스템을 종료합니다.");
->>>>>>> Stashed changes
 				return;
+			}
 
 			if (!(serviceChoice == 1 || serviceChoice == 2)) {
 				System.out.println("번호를 다시 입력해주세요." + "\n");
@@ -83,7 +81,7 @@ public class LogSimulation {
 			try {
 				return sc.nextLong();
 			} catch (InputMismatchException e) {
-				sc.nextLine(); 
+				sc.nextLine();
 				System.out.println(">> 올바른 금액(숫자)을 입력해주세요.");
 				System.out.print("금액을 다시 입력하세요 : ");
 			}
@@ -172,16 +170,16 @@ public class LogSimulation {
 
 	// 입금
 	public void deposit(long amount) {
-		logger.info("[입금 성공] name={}, accountNumber={}, amount={}원", currentMember.getName(), currentMember.getAccountNumber(),
-				amount);
+		logger.info("[입금 성공] name={}, accountNumber={}, amount={}원", currentMember.getName(),
+				currentMember.getAccountNumber(), amount);
 
 		System.out.println(">> 입금 처리가 완료되었습니다." + "\n");
 	}
 
 	// 출금
 	public void withdraw(long amount) {
-		logger.info("[출금 성공] name={}, accountNumber={}, amount={}원", currentMember.getName(), currentMember.getAccountNumber(),
-				amount);
+		logger.info("[출금 성공] name={}, accountNumber={}, amount={}원", currentMember.getName(),
+				currentMember.getAccountNumber(), amount);
 
 		System.out.println(">> 출금 처리가 완료되었습니다." + "\n");
 	}

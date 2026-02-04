@@ -1,20 +1,38 @@
 package dev.logging.app;
 
 import java.util.Random;
+import java.util.regex.Pattern;
 
 public class Member {
 	private String name;
 	private String rrn;
 	private String pw;
 	private String accountNumber;
+	
+	public static final String RRN_REGEX = "^\\d{6}-\\d{7}$";
+    public static final String PW_REGEX = "^[a-zA-Z0-9!@#$%^&*]{4,}$";
 
 	public Member(String name, String rrn, String pw) {
-		super();
+		if (!isValidRrn(rrn)) {
+            throw new IllegalArgumentException("주민번호 형식이 올바르지 않습니다.");
+        }
+        if (!isValidPw(pw)) {
+            throw new IllegalArgumentException("비밀번호 형식이 올바르지 않습니다.");
+        }
+        
 		this.name = name;
 		this.rrn = rrn;
 		this.pw = pw;
 		this.accountNumber = setAccountNumber();
 	}
+	
+	public static boolean isValidRrn(String rrn) {
+        return Pattern.matches(RRN_REGEX, rrn);
+    }
+
+    public static boolean isValidPw(String pw) {
+        return Pattern.matches(PW_REGEX, pw);
+    }
 
 	// 14자리 랜덤 계좌번호 생성 메서드
 	// 포맷팅: YYY-ZZZZZZZ-C-XXX
