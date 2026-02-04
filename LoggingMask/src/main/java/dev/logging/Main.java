@@ -15,4 +15,6 @@ public class Main {
 		System.out.println("계좌: " + MaskingUtils.maskAccount("1002-345-678901"));
 	}
 
+        System.out.println("=== 프로그램 종료 ===");
+    }
 }
