@@ -139,7 +139,7 @@ Spring 의존성 없이
       <br />
     </td>
     <td align="center">
-      <a href="https://github.com/yujeong">
+      <a href="https://github.com/yujung23">
         <img src="https://avatars.githubusercontent.com/yujung23" width="120px;" alt="김유정"/>
         <br />
         <sub><b>김유정</b></sub>
@@ -147,7 +147,7 @@ Spring 의존성 없이
       <br />
     </td>
     <td align="center">
-      <a href="https://github.com/je0ngyoung">
+      <a href="https://github.com/zerobak13">
         <img src="https://avatars.githubusercontent.com/zerobak13" width="120px;" alt="박제영"/>
         <br />
         <sub><b>박제영</b></sub>
@@ -155,7 +155,7 @@ Spring 의존성 없이
       <br />
     </td>
     <td align="center">
-      <a href="https://github.com/hyeyoon">
+      <a href="https://github.com/hyeyoon23">
         <img src="https://avatars.githubusercontent.com/hyeyoon23" width="120px;" alt="이혜윤"/>
         <br />
         <sub><b>이혜윤</b></sub>
