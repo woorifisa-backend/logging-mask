@@ -1,29 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <turboFilter class="com.mycompany.log.SecurityMarkingFilter" />
 
-    <conversionRule conversionWord="maskedMsg" converterClass="com.mycompany.log.MaskingConverter" />
+	<conversionRule conversionWord="masking" converterClass="dev.logging.logback.SensitiveDataConverter" />
 
-    <appender name="SIFT" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <discriminator>
-            <key>logType</key>
-            <defaultValue>GENERAL</defaultValue>
-        </discriminator>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss} [%thread] %-5level - %masking(%msg)%n</pattern>
+        </encoder>
+    </appender>
 
-        <sift>
-            <appender name="FILE-${logType}" class="ch.qos.logback.core.rolling.RollingFileAppender">
-                <file>logs/${logType}.log</file> <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>logs/${logType}.%d{yyyy-MM-dd}.log</fileNamePattern>
-                    <maxHistory>3</maxHistory> 
-                </rollingPolicy>
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
 
-                <encoder>
-                    <pattern>%d{HH:mm:ss} [%thread] %-5level - %maskedMsg%n</pattern>
-                </encoder>
-            </appender>
-        </sift>
-    </appender>
-
-    <root level="INFO">
-        <appender-ref ref="SIFT" />
-        <appender-ref ref="CONSOLE" /> </root>
 </configuration>
