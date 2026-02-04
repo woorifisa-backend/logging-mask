@@ -2,8 +2,11 @@ package dev.logging.util;
 
 public class MaskingUtils {
 	public static String maskName(String name) {
-        if (name == null || name.isBlank()) return name;
-        return name.charAt(0) + "**";
+        if (name == null) return name;
+        return name.replaceAll(
+                "^(.).*$",
+                "$1**"
+            );
     }
 
     public static String maskPhone(String phone) {
