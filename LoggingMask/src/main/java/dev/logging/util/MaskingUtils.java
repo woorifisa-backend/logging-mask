@@ -2,13 +2,13 @@ package dev.logging.util;
 
 public class MaskingUtils {
 	public static String maskName(String name) {
-        if (name == null) return name;
-        return name.replaceAll(
-                "^(.).*$",
-                "$1**"
-            );
-    }
-
+	    if (name == null) return null;
+	    return name.replaceAll(
+	        "(name=)([^,\\s])[^,\\s]*",
+	        "$1$2**"
+	    );
+	}
+	
     public static String maskPhone(String phone) {
         if (phone == null) return phone;
         return phone.replaceAll(

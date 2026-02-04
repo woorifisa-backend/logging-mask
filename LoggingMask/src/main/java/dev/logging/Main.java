@@ -13,5 +13,5 @@ public class Main {
 		logger.info(userInfo);
 
 		System.out.println("=== 로그 테스트 종료 (콘솔과 logs 폴더를 확인하세요) ===");
-}
+	}
 }
