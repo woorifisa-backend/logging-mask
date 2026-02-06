@@ -1,3 +1,0 @@
-2026-02-05 17:22:30 [main] INFO  dev.logging.app.LogSimulation - 신규 회원가입: name=김**, rrn=111111-*******, accountNumber=***-*******-3-110
-2026-02-05 17:22:49 [main] INFO  dev.logging.app.LogSimulation - name=김**, rrn=111111-*******, accountNumber=***-*******-3-110님 로그인 성공
-2026-02-05 17:22:53 [main] INFO  dev.logging.app.LogSimulation - [출금 성공] name=김**, accountNumber=***-*******-3-110, amount=100원
