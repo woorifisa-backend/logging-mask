@@ -91,13 +91,24 @@ public class LogSimulation {
 	// 회원가입
 	public void signUp() {
 		System.out.println("\n=========== [회원가입 - 정보 입력] ===========");
-		System.out.print("이름 : ");
-		String name = sc.next();
+		sc.nextLine(); 
+
+	    String name = "";
+	    while (true) {
+	        System.out.print("이름 : ");
+	        name = sc.nextLine(); 
+
+	        if (Member.isValidName(name)) {
+	            break;
+	        } else {
+	            System.out.println(">> 이름은 한글만 입력 가능하며, 공백이 두 글자 이상 작성해주세요.");
+	        }
+	    }
 
 		String rrn = "";
 		while (true) {
 			System.out.print("주민번호(xxxxxx-xxxxxxx) : ");
-			rrn = sc.next();
+			rrn = sc.nextLine();
 
 			if (Member.isValidRrn(rrn)) {
 				break;
@@ -109,7 +120,7 @@ public class LogSimulation {
 		String pw = "";
 		while (true) {
 			System.out.print("비밀번호(영문/숫자 4자리 이상) : ");
-			pw = sc.next();
+			pw = sc.nextLine();
 
 			if (Member.isValidPw(pw)) {
 				break;
@@ -135,9 +146,9 @@ public class LogSimulation {
 	public boolean signIn() {
 		System.out.println("\n============= [로그인] =============");
 		System.out.print("이름 : ");
-		String inputName = sc.next();
+		String inputName = sc.nextLine();
 		System.out.print("비밀번호 : ");
-		String inputPW = sc.next();
+		String inputPW = sc.nextLine();
 
 		boolean isFound = false;
 		for (Member m : memberList) {

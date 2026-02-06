@@ -9,10 +9,14 @@ public class Member {
 	private String pw;
 	private String accountNumber;
 	
+	public static final String NAME_REGEX = "^[가-힣]{2,}$";
 	public static final String RRN_REGEX = "^\\d{6}-\\d{7}$";
     public static final String PW_REGEX = "^[a-zA-Z0-9!@#$%^&*]{4,}$";
 
 	public Member(String name, String rrn, String pw) {
+		if (!isValidName(name)) {
+            throw new IllegalArgumentException("이름 형식이 올바르지 않습니다.");
+        }
 		if (!isValidRrn(rrn)) {
             throw new IllegalArgumentException("주민번호 형식이 올바르지 않습니다.");
         }
@@ -25,6 +29,10 @@ public class Member {
 		this.pw = pw;
 		this.accountNumber = setAccountNumber();
 	}
+	
+	public static boolean isValidName(String name) {
+        return Pattern.matches(NAME_REGEX, name);
+    }
 	
 	public static boolean isValidRrn(String rrn) {
         return Pattern.matches(RRN_REGEX, rrn);
