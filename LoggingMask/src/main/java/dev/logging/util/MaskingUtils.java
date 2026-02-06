@@ -7,15 +7,8 @@ public class MaskingUtils {
 	        "(name=)([^,\\s])[^,\\s]*",
 	        "$1$2**"
 	    );
-	}
+	} // 글자수
 	
-    public static String maskPhone(String phone) {
-        if (phone == null) return phone;
-        return phone.replaceAll(
-            "(01[016789])-(\\d{4})-(\\d{4})",
-            "$1-****-$3"
-        );
-    }
 
     public static String maskResidentId(String rrn) {
         if (rrn == null) return rrn;
