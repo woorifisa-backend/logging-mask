@@ -1,5 +1,6 @@
 package dev.logging.util;
 import java.util.regex.Pattern;
+import java.util.Objects;
 import java.util.regex.Matcher;
 public class MaskingUtils {
 	public static String maskName(String log) {
@@ -45,7 +46,13 @@ public class MaskingUtils {
 	
 
     public static String maskResidentId(String rrn) {
-        if (rrn == null) return rrn;
+    	// null이면 NullPointerException을 던지고, 아니면 그대로 rrn을 반환함
+        Objects.requireNonNull(rrn, "주민등록번호 입력값이 누락되었습니다.");
+        
+        if (rrn.isBlank()) { 
+            throw new IllegalArgumentException("주민등록번호가 비어있습니다.");
+        }
+        
         return rrn.replaceAll(
             "(\\d{6})-(\\d{7})",
             "$1-*******"
@@ -53,7 +60,13 @@ public class MaskingUtils {
     }
 
     public static String maskAccount(String account) {
-        if (account == null) return account;
+    	// null이면 NullPointerException을 던지고, 아니면 그대로 account을 반환함
+        Objects.requireNonNull(account, "계좌번호 값이 누락되었습니다.");
+        
+        if (account.isBlank()) { 
+            throw new IllegalArgumentException("계좌번호가 비어있습니다.");
+        }
+        
         return account.replaceAll(
 //            "(\\d+)-(\\d+)-(\\d{2})(\\d{4})",
 //            "****-***-**$4"
