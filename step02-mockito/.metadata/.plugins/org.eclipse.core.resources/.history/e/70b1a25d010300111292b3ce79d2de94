@@ -1,0 +1,63 @@
+
+
+import static org.mockito.Mockito.*;
+
+import java.time.LocalDate;
+import java.time.Month;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
+
+import dev.syntax.data.BookingDAO;
+import dev.syntax.data.BookingRequest;
+import dev.syntax.exception.BusinessException;
+import dev.syntax.service.BookingService;
+import dev.syntax.service.MailSender;
+import dev.syntax.service.PaymentService;
+import dev.syntax.service.RoomService;
+
+public class Test04 {
+  
+  private BookingService bookingService;
+  private PaymentService paymentServiceMock;
+  private RoomService roomServiceMock;
+  private BookingDAO bookingDAOMock;
+  private MailSender mailSenderMock;
+  
+  
+  @BeforeEach
+  void setup() {
+    this.paymentServiceMock = mock(PaymentService.class);
+    this.roomServiceMock = mock(RoomService.class);
+    this.bookingDAOMock = mock(BookingDAO.class);
+    this.mailSenderMock = mock(MailSender.class);
+    
+    this.bookingService = 
+        new BookingService(paymentServiceMock, 
+                  roomServiceMock, 
+                  bookingDAOMock, 
+                  mailSenderMock);
+  }
+  
+  @Test
+  @DisplayName("예약 과정에서 공실이 없을 경우, BusinessException을 던진다.")
+ void test1() {
+	  // 1. 예약 정보 객체 생성
+      BookingRequest bookingRequest = BookingRequest.builder()
+          .userId("1")
+          .dateFrom(LocalDate.of(2025, Month.JANUARY, 1))
+          .dateTo(LocalDate.of(2025, Month.JANUARY, 5))
+          .guestCount(2)
+          .prepaid(false)
+          .build();
+      when(this.roomServiceMock.findAvailableRoomId(bookingRequest))
+      .thenThrow(BusinessException.class);
+      
+     Executable executable=()-> bookingService.makeBooking(bookingRequest);
+      
+      assertThrows(BusinessException.class,excutable);
+  }
+}
+

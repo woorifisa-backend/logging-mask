@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="java.util.Collections"/>
+    <fullyQualifiedTypeName name="dev.syntax.Test04"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.function.Executable"/>
+    <fullyQualifiedTypeName name="org.mockito.Mock"/>
+</qualifiedTypeNameHistroy>

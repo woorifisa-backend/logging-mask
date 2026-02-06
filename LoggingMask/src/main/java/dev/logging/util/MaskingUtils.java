@@ -27,9 +27,7 @@ public class MaskingUtils {
 	private static String maskByLength(String name) {
 	    int len = name.length();
 
-	    if (len <= 1) {
-	        return name;                 // 1글자: 그대로
-	    }
+	 
 	    if (len == 2) {
 	        return name.charAt(0) + "*"; // 홍길 → 홍*
 	    }

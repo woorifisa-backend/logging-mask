@@ -1,0 +1,58 @@
+package dev.syntax;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import dev.syntax.data.BookingDAO;
+import dev.syntax.data.BookingRequest;
+import dev.syntax.exception.BusinessException;
+import dev.syntax.service.BookingService;
+import dev.syntax.service.MailSender;
+import dev.syntax.service.PaymentService;
+import dev.syntax.service.RoomService;
+
+public class Test04 {
+  
+  private BookingService bookingService;
+  private PaymentService paymentServiceMock;
+  private RoomService roomServiceMock;
+  private BookingDAO bookingDAOMock;
+  private MailSender mailSenderMock;
+  
+  
+  @BeforeEach
+  void setup() {
+    this.paymentServiceMock = mock(PaymentService.class);
+    this.roomServiceMock = mock(RoomService.class);
+    this.bookingDAOMock = mock(BookingDAO.class);
+    this.mailSenderMock = mock(MailSender.class);
+    
+    this.bookingService = 
+        new BookingService(paymentServiceMock, 
+                  roomServiceMock, 
+                  bookingDAOMock, 
+                  mailSenderMock);
+  }
+  
+  @Test
+  @DisplayName("예약 과정에서 공실이 없을 경우, BusinessException을 던진다.")
+ void test1() {
+	// Given
+	    RoomService roomService = new RoomService();
+
+	    BookingRequest bookingRequest = BookingRequest.builder()
+	        .guestCount(99) // ❗ 어떤 방도 수용 불가
+	        .build();
+
+	    // When & Then
+	    assertThrows(
+	        BusinessException.class,
+	        () -> roomService.findAvailableRoomId(bookingRequest)
+	    );
+	    }
+}
+
