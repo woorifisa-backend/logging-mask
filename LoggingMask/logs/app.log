@@ -1,2 +1,0 @@
-2026-02-04 15:59:50 [main] WARN  dev.logging.app.LogSimulation - 로그인 실패: 비밀번호 불일치 (시도한 ID: 이혜윤)
-2026-02-04 16:00:17 [main] INFO  dev.logging.app.LogSimulation - [출금 성공] 이름: 이혜윤, 계좌번호: 243-7685991-3-394, 금액: 5000원
