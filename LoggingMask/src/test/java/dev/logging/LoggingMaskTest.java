@@ -34,13 +34,14 @@ public class LoggingMaskTest {
 
 	        // When
 	        String result = converter.convert(event);
+	        String expected = "user=admin, access=true";
 
 	        // Then: "pw=secret123"과 앞의 콤마, 공백이 사라졌는지 확인
-	        assertEquals("user=admin, access=true", result);
+	        assertEquals(expected, result);
 		}
 		
 		@Test
-	    @DisplayName("2. 메시지가 null일 때 에러 없이 공백을 반환 확인")
+	    @DisplayName("2. 메시지가 null일 때 에러 없이 공백 반환 확인")
 	    void test2() {
 	        // Given
 	        given(event.getFormattedMessage())
@@ -48,13 +49,14 @@ public class LoggingMaskTest {
 
 	        // When
 	        String result = converter.convert(event);
+	        String expected = "";
 
 	        // Then
-	        assertEquals("", result);
+	        assertEquals(expected, result);
 	    }
 		
 		@Test
-	    @DisplayName("3. 유틸 함수 실행: 이름, 주민번호, 계좌 정보가 마스킹 처리되는지 확인")
+	    @DisplayName("3. 유틸 함수 실행: 각 정보가 마스킹 처리되는지 확인")
 	    void test3() {
 	        // Given: 모든 민감 정보가 포함된 메시지
 	        String rawLog = "name=김우리, rrn=123456-7890123, accountNumber=012-3456789-4-924";
@@ -63,10 +65,12 @@ public class LoggingMaskTest {
 	        // When
 	        String result = converter.convert(event);
 
-	        // Then: 원본 텍스트가 더 이상 포함되어 있지 않아야 함 (마스킹 유틸이 작동했다는 증거)
-	        assertFalse(result.contains("김우리"));
-	        assertFalse(result.contains("7890123"));
-	        assertFalse(result.contains("012-3456789"));
+	        // Then: 원본 텍스트가 포함되어 있지 않아야 함 (마스킹 유틸이 작동했다는 증거)
+	        org.junit.jupiter.api.Assertions.assertAll(
+	                () -> assertFalse(result.contains("김우리")),
+	                () -> assertFalse(result.contains("7890123")),
+	                () -> assertFalse(result.contains("012-3456789"))
+	            );
 	        
 	        
 	    }
