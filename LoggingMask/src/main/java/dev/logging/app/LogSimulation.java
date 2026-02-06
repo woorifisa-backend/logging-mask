@@ -146,6 +146,7 @@ public class LogSimulation {
 	public boolean signIn() {
 		System.out.println("\n============= [로그인] =============");
 		sc.nextLine();
+    
 		System.out.print("이름 : ");
 		String inputName = sc.nextLine();
 		System.out.print("비밀번호 : ");

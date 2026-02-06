@@ -9,13 +9,11 @@ public class SensitiveDataConverter extends ClassicConverter {
 	public String convert(ILoggingEvent event) {
 		String message = event.getFormattedMessage();
 		if (message == null) return "";
-
 		// 비밀번호 삭제
 		String result = message.replaceAll(",? ?pw=[^,]*", "");
 		
 		result = MaskingUtils.maskName(result);
 		result = MaskingUtils.maskResidentId(result);
-		result = MaskingUtils.maskPhone(result);
 		result = MaskingUtils.maskAccount(result);
 
 		return result;
