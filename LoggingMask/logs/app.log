@@ -1,3 +1,7 @@
-2026-02-05 17:22:30 [main] INFO  dev.logging.app.LogSimulation - 신규 회원가입: name=김**, rrn=111111-*******, accountNumber=***-*******-3-110
-2026-02-05 17:22:49 [main] INFO  dev.logging.app.LogSimulation - name=김**, rrn=111111-*******, accountNumber=***-*******-3-110님 로그인 성공
-2026-02-05 17:22:53 [main] INFO  dev.logging.app.LogSimulation - [출금 성공] name=김**, accountNumber=***-*******-3-110, amount=100원
+2026-02-06 15:53:07 [main] INFO  dev.logging.app.LogSimulation - 신규 회원가입: name=박**김, rrn=123456-*******, accountNumber=***-*******-8-520
+2026-02-06 15:54:32 [main] INFO  dev.logging.app.LogSimulation - 신규 회원가입: name=박**, rrn=123456-*******, accountNumber=***-*******-7-417
+2026-02-06 15:58:11 [main] INFO  dev.logging.app.LogSimulation - 신규 회원가입: name=박**, rrn=123456-*******, accountNumber=***-*******-2-343
+2026-02-06 15:58:31 [main] INFO  dev.logging.app.LogSimulation - name=박**, rrn=123456-*******, accountNumber=***-*******-2-343님 로그인 성공
+2026-02-06 16:05:32 [main] INFO  dev.logging.app.LogSimulation - 신규 회원가입: name=박*영, rrn=123456-*******, accountNumber=***-*******-0-606
+2026-02-06 16:05:56 [main] INFO  dev.logging.app.LogSimulation - 신규 회원가입: name=박**김, rrn=123456-*******, accountNumber=***-*******-3-127
+2026-02-06 16:06:01 [main] INFO  dev.logging.app.LogSimulation - name=박**김, rrn=123456-*******, accountNumber=***-*******-3-127님 로그인 성공
