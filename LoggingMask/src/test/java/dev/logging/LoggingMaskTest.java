@@ -1,99 +1,97 @@
 package dev.logging;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Objects;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import dev.logging.util.MaskingUtils;
 
 class LoggingMaskTest {
 
+	@Nested
+	class Util_RRN {
+
+		@Test
+	    @DisplayName("주민등록번호가 null일 경우, NullPointerException이 발생한다.")
+	    void testMaskResidentIdNull() {
+	        
+			// Given
+			String rrn = null;
+			
+			// When		
+			// Then
+			assertThrows(NullPointerException.class, () -> 
+		        MaskingUtils.maskResidentId(rrn));
+	    }
+
+		@Test
+		@DisplayName("주민등록번호가 빈 문자열일 경우, IllegalArgumentException이 발생한다.")
+		void testMaskResidentIdBlank() {
+			// Given
+			String rrn = "  "; // 공백 문자열
+
+			// When & Then
+			assertThrows(IllegalArgumentException.class, () -> MaskingUtils.maskResidentId(rrn));
+		}
+		
+		@Test
+		@DisplayName("주민등록번호가 정상 입력일 경우, 뒷 자리가 마스킹되어 반환된다.")
+		void testMaskingRRN() {
+			// Given
+			String rrn = "021229-0101010"; // 정상 입력
+			String expected = "021229-*******";
+
+			// When 
+			String actual = MaskingUtils.maskResidentId(rrn);
+			
+			// Then
+			assertEquals(expected, actual);
+		}
+	}
 	
-	 @Test
-	    @DisplayName("입력값이 null이면 null을 반환한다")
-	    void returnNull_whenInputIsNull() {
-
-	        // Given
-	        String log = null;
-
-	        // When
-	        String result = MaskingUtils.maskName(log);
-
-	        // Then
-	        assertNull(result);
+	@Nested
+	class Util_Account {
+		@Test
+	    @DisplayName("계좌번호가 null일 경우, NullPointerException이 발생한다.")
+	    void testMaskAccountNull() {
+	        
+			// Given
+			String account = null;
+			
+			// When		
+			// Then
+			assertThrows(NullPointerException.class, () -> 
+		        MaskingUtils.maskAccount(account));
 	    }
 
-	    @Test
-	    @DisplayName("2글자 한글 이름이면 첫 글자만 남기고 마스킹한다")
-	    void maskTwoCharName() {
+		@Test
+		@DisplayName("계좌번호가 빈 문자열일 경우, IllegalArgumentException이 발생한다.")
+		void testMaskAccountBlank() {
+			// Given
+			String account = "  "; // 공백 문자열
 
-	        // Given
-	        String log = "name=홍길";
+			// When & Then
+			assertThrows(IllegalArgumentException.class, () -> MaskingUtils.maskAccount(account));
+		}
+		
+		@Test
+		@DisplayName("계좌번호가 정상 입력일 경우, 뒷 자리를 제외하고 마스킹되어 반환된다.")
+		void testMaskingAccouont() {
+			// Given YYY-ZZZZZZZ-C-XXX
+			String account = "123-1234567-8-987"; // 정상 입력
+			String expected = "***-*******-8-987";
 
-	        // When
-	        String result = MaskingUtils.maskName(log);
-
-	        // Then
-	        assertEquals("name=홍*", result);
-	    }
-
-	    @Test
-	    @DisplayName("3글자 한글 이름이면 가운데 글자를 마스킹한다")
-	    void maskThreeCharName() {
-
-	        // Given
-	        String log = "name=홍길동";
-
-	        // When
-	        String result = MaskingUtils.maskName(log);
-
-	        // Then
-	        assertEquals("name=홍*동", result);
-	    }
-
-	    @Test
-	    @DisplayName("4글자 한글 이름이면 가운데 두 글자를 마스킹한다")
-	    void maskFourCharName() {
-
-	        // Given
-	        String log = "name=홍길동김";
-
-	        // When
-	        String result = MaskingUtils.maskName(log);
-
-	        // Then
-	        assertEquals("name=홍**김", result);
-	    }
-
-	    @Test
-	    @DisplayName("name 키가 없으면 문자열은 변경되지 않는다")
-	    void doNothing_whenNameNotExists() {
-
-	        // Given
-	        String log = "age=20";
-
-	        // When
-	        String result = MaskingUtils.maskName(log);
-
-	        // Then
-	        assertEquals("age=20", result);
-	    }
-
-	    @Test
-	    @DisplayName("영문 이름도 길이 기준에 따라 마스킹된다")
-	    void maskEnglishNameByLength() {
-
-	        // Given
-	        String log = "name=John";
-
-	        // When
-	        String result = MaskingUtils.maskName(log);
-
-	        // Then
-	        assertEquals("name=J**n", result);
-	    }
-	
+			// When 
+			String actual = MaskingUtils.maskAccount(account);
+			
+			// Then
+			assertEquals(expected, actual);
+		}
+	}
 
 }
