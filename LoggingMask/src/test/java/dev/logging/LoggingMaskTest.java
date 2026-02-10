@@ -1,5 +1,6 @@
 package dev.logging;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -159,12 +160,17 @@ class LoggingMaskTest {
 
 	}
 
-	@Mock
-	private ILoggingEvent event;
-	private final SensitiveDataConverter converter = new SensitiveDataConverter();
-
 	@Nested
 	class ConverterTest {
+
+		@Mock
+		private ILoggingEvent event;
+		private SensitiveDataConverter converter;
+
+		@BeforeEach
+		void setUp() {
+			converter = new SensitiveDataConverter();
+		}
 
 		@Test
 		@DisplayName("1. 비밀번호 삭제 확인")
@@ -211,75 +217,75 @@ class LoggingMaskTest {
 		}
 	}
 
-	 @Nested
+	@Nested
 	class SecurityTaggingFilterTest {
 
-	    private SecurityTaggingFilter filter;
+		private SecurityTaggingFilter filter;
 
-	    @BeforeEach
-	    void setUp() {
-	        filter = new SecurityTaggingFilter();
-	        filter.start();
-	    }
+		@BeforeEach
+		void setUp() {
+			filter = new SecurityTaggingFilter();
+			filter.start();
+		}
 
-	    @Test
-	    @DisplayName("1. 로그 이벤트가 null인 경우 → NEUTRAL")
-	    void givenNullEvent_whenDecide_thenNeutral() {
-	      // Given
-	      ILoggingEvent event = null;
+		@Test
+		@DisplayName("1. 로그 이벤트가 null인 경우 → NEUTRAL")
+		void givenNullEvent_whenDecide_thenNeutral() {
+			// Given
+			ILoggingEvent event = null;
 
-	      // When
-	      FilterReply result = filter.decide(event);
+			// When
+			FilterReply result = filter.decide(event);
 
-	      // Then
-	      assertEquals(FilterReply.NEUTRAL, result);
-	    }
+			// Then
+			assertEquals(FilterReply.NEUTRAL, result);
+		}
 
-	    @Test
-	    @DisplayName("2. 로그 메시지가 null인 경우 → NEUTRAL")
-	    void givenNullMessage_whenDecide_thenNeutral() {
-	      // Given
-	      ILoggingEvent event = mock(ILoggingEvent.class);
-	      when(event.getFormattedMessage()).thenReturn(null);
+		@Test
+		@DisplayName("2. 로그 메시지가 null인 경우 → NEUTRAL")
+		void givenNullMessage_whenDecide_thenNeutral() {
+			// Given
+			ILoggingEvent event = mock(ILoggingEvent.class);
+			when(event.getFormattedMessage()).thenReturn(null);
 
-	      // When
-	      FilterReply result = filter.decide(event);
+			// When
+			FilterReply result = filter.decide(event);
 
-	      // Then
-	      assertEquals(FilterReply.NEUTRAL, result);
-	    }
+			// Then
+			assertEquals(FilterReply.NEUTRAL, result);
+		}
 
-	    @Test
-	    @DisplayName("3. 로그 메시지가 빈 문자열 또는 공백인 경우 → NEUTRAL")
-	    void givenBlankMessage_whenDecide_thenNeutral() {
-	      // Given
-	      ILoggingEvent emptyEvent = mock(ILoggingEvent.class);
-	      when(emptyEvent.getFormattedMessage()).thenReturn("");
+		@Test
+		@DisplayName("3. 로그 메시지가 빈 문자열 또는 공백인 경우 → NEUTRAL")
+		void givenBlankMessage_whenDecide_thenNeutral() {
+			// Given
+			ILoggingEvent emptyEvent = mock(ILoggingEvent.class);
+			when(emptyEvent.getFormattedMessage()).thenReturn("");
 
-	      ILoggingEvent blankEvent = mock(ILoggingEvent.class);
-	      when(blankEvent.getFormattedMessage()).thenReturn("   ");
+			ILoggingEvent blankEvent = mock(ILoggingEvent.class);
+			when(blankEvent.getFormattedMessage()).thenReturn("   ");
 
-	      // When
-	      FilterReply emptyResult = filter.decide(emptyEvent);
-	      FilterReply blankResult = filter.decide(blankEvent);
+			// When
+			FilterReply emptyResult = filter.decide(emptyEvent);
+			FilterReply blankResult = filter.decide(blankEvent);
 
-	      // Then
-	      assertEquals(FilterReply.NEUTRAL, emptyResult);
-	      assertEquals(FilterReply.NEUTRAL, blankResult);
-	    }
+			// Then
+			assertAll(() -> assertEquals(FilterReply.NEUTRAL, emptyResult),
+					() -> assertEquals(FilterReply.NEUTRAL, blankResult));
+		}
 
-	    @Test
-	    @DisplayName("4. pw 키가 포함된 로그 → DENY")
-	    void givenPwKeyword_whenDecide_thenDeny() {
-	      // Given
-	      ILoggingEvent event = mock(ILoggingEvent.class);
-	      when(event.getFormattedMessage()).thenReturn("login failed: pw=abcd1234");
+		@Test
+		@DisplayName("4. pw 키가 포함된 로그인 경 → DENY")
+		void givenPwKeyword_whenDecide_thenDeny() {
+			// Given
+			ILoggingEvent event = mock(ILoggingEvent.class);
+			when(event.getFormattedMessage()).thenReturn("login failed: pw=abcd1234");
 
-	      // When
-	      FilterReply result = filter.decide(event);
+			// When
+			FilterReply result = filter.decide(event);
 
-	      // Then
-	      assertEquals(FilterReply.DENY, result);
-	    }
+			// Then
+			assertEquals(FilterReply.DENY, result);
+		}
 	}
 }
