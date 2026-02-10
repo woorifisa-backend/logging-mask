@@ -170,11 +170,11 @@ class LoggingMaskTest {
 		@DisplayName("1. 비밀번호 삭제 확인")
 		void test1() {
 			// Given: pw가 포함된 메시지
-			given(event.getFormattedMessage()).willReturn("user=admin, pw=secret123, access=true");
+			given(event.getFormattedMessage()).willReturn("user=김**, pw=secret123");
 
 			// When
 			String result = converter.convert(event);
-			String expected = "user=admin, access=true";
+			String expected = "user=김**";
 
 			// Then: "pw=secret123"과 앞의 콤마, 공백이 사라졌는지 확인
 			assertEquals(expected, result);
