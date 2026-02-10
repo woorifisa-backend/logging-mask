@@ -165,5 +165,5 @@ class LoggingMaskTest {
 	        
 	        
 	    }
-
+  }
 }
