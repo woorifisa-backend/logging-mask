@@ -165,5 +165,59 @@ class LoggingMaskTest {
 	        
 	        
 	    }
+		
+		 @Nested
+		    @DisplayName("maskName - 이름 마스킹")
+		    class MaskNameTest {
+
+		        @Test
+		        @DisplayName("입력값이 null이면 null을 반환한다")
+		        void returnNull_whenInputIsNull() {
+		            String log = null;
+		            String result = MaskingUtils.maskName(log);
+		            assertNull(result);
+		        }
+
+		        @Test
+		        @DisplayName("2글자 한글 이름이면 첫 글자만 남기고 마스킹한다")
+		        void maskTwoCharName() {
+		            String log = "name=홍길";
+		            String result = MaskingUtils.maskName(log);
+		            assertEquals("name=홍*", result);
+		        }
+
+		        @Test
+		        @DisplayName("3글자 한글 이름이면 가운데 글자를 마스킹한다")
+		        void maskThreeCharName() {
+		            String log = "name=홍길동";
+		            String result = MaskingUtils.maskName(log);
+		            assertEquals("name=홍*동", result);
+		        }
+
+		        @Test
+		        @DisplayName("4글자 한글 이름이면 가운데 두 글자를 마스킹한다")
+		        void maskFourCharName() {
+		            String log = "name=홍길동김";
+		            String result = MaskingUtils.maskName(log);
+		            assertEquals("name=홍**김", result);
+		        }
+
+		        @Test
+		        @DisplayName("name 키가 없으면 문자열은 변경되지 않는다")
+		        void doNothing_whenNameNotExists() {
+		            String log = "age=20";
+		            String result = MaskingUtils.maskName(log);
+		            assertEquals("age=20", result);
+		        }
+
+		        @Test
+		        @DisplayName("영문 이름도 길이 기준에 따라 마스킹된다")
+		        void maskEnglishNameByLength() {
+		            String log = "name=John";
+		            String result = MaskingUtils.maskName(log);
+		            assertEquals("name=J**n", result);
+		        }
+		    }
+  }
 
 }
